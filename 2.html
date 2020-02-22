@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .left,
+        .right {
+            width: 100px;
+            height: 200px;
+            background: yellow;
+            overflow: hidden;
+        }
+
+        .row {
+            display: flex;
+            flex-direction: row;
+        }
+
+        .left {
+            border-radius: 100px 0 0 100px;
+        }
+
+        .right {
+            border-radius: 0 100px 100px 0;
+
+        }
+
+        .rightCon {
+            width: 100px;
+            height: 200px;
+            background: red;
+            border-radius: 0 100px 100px 0;
+            transform: rotate(-120deg);
+            transform-origin: left center;
+        }
+
+        .leftCon {
+            width: 100px;
+            height: 200px;
+            background: red;
+            border-radius: 100px 0px 0px 100px;
+            transform: rotate(20deg);
+            transform-origin: right center;
+        }
+
+        .circle {
+            width: 180px;
+            height: 180px;
+            position: absolute;
+            left: 10px;
+            top: 10px;
+            border-radius: 90px;
+            background: green;
+
+        }
+
+        .rel {
+            position: relative;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="row rel">
+        <div class="left">
+            <div id="left" class="leftCon"></div>
+        </div>
+        <div class="right">
+            <div id="right" class="rightCon"></div>
+        </div>
+        <div class="circle"></div>
+    </div>
+</body>
+
+</html>
+<script>
+    function getLeftPercent(count, totalcount) {
+        if (totalcount == 0 || count == 0 || count / totalcount <= 0.5) {
+            return -180;
+        } else {
+            return 180 * (((count / totalcount - 0.5) * 2) - 1);
+        }
+    }
+    function getRightPercent(count, totalcount) {
+        if (totalcount == 0 || count == 0) {
+            return -180;
+        } else if (count / totalcount >= 0.5) {
+            return 0;
+        } else {
+            // -(180 - 180 * (percent*2))
+            return 180 * (((count / totalcount) * 2) - 1);
+        }
+    }
+    var left = document.getElementById('left');
+    var right = document.getElementById('right');
+    var count = 5;
+    var totalcount = 6;
+    left.style.transform = "rotate(" + getLeftPercent(count, totalcount) + "deg)";
+    right.style.transform = "rotate(" + getRightPercent(count, totalcount) + "deg)";
+
+</script>
